@@ -1,0 +1,44 @@
+from flask import flash
+from flask_wtf import Form
+from wtforms import StringField, BooleanField, HiddenField
+from wtforms.validators import DataRequired
+from flask_cms.page.models import Page
+
+from flask_cms.utils import CKTextAreaField
+
+
+class EditPage(Form):
+    slug = StringField('Slug', validators=[DataRequired()])
+    title = StringField('Title', validators=[DataRequired()])
+    description = StringField('Description', validators=[DataRequired()])
+    content = CKTextAreaField('Content')
+    login_required = BooleanField("login_required", default=False)
+    show_in_nav = BooleanField("show_in_nav", default=False)
+    publish = BooleanField("publish", default=False)
+    parent_slug = HiddenField("parent_slug")
+
+    def __init__(self, page=None):
+        Form.__init__(self)
+        self.page = page
+        if self.page:
+            self.slug.data = page.slug
+            self.title.data = page.title
+            self.description.data = page.description
+            self.content.data = page.content
+            self.login_required.data = page.login_required
+            self.show_in_nav.data = page.show_in_nav
+            self.publish.data = page.publish
+
+    def validate(self):
+        if not Form.validate(self):
+            return False
+
+        if self.page is None:
+            existing_page = Page.query.filter_by(
+                slug=self.slug.data).first()
+
+            if existing_page is not None:
+                flash("Page with same slug already exists.", "error")
+                return False
+
+        return True

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        {% if form.user %}
+        <div class="col-md-3">
+            <div class="text-center">
+                <img src="{{form.user.avatar(100)}}">
+                <p><a href="https://en.gravatar.com/">Powered by gravatar</a></p>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="col-xs-12 col-md-6">
+            <form action={{url_for('member.show')}} class="form-horizontal" method="post">
+                {{ form.hidden_tag() }}
+                <h2>Welcome, {{ form.first_name }}</h2>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    {{ form.email(type="email", id="email", class="form-control", placeholder="Email", autofocus=true, required=true)}}
+                </div>
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    {{ form.first_name(type="text", id="first_name", class="form-control", placeholder="First Name", autofocus=true, required=true)}}
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    {{ form.last_name(type="text", id="last_name", class="form-control", placeholder="Last Name", autofocus=true, required=true)}}
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+                    <a href={{url_for('member.change_password')}} >Change Password</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

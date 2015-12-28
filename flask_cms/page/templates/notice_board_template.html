@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{page.title}}</h2>
+<div class="container">
+    {% for group in grouper(page.children_ordered_by_latest(), 3) %}
+    <div class="row">
+        {% for p in group %}
+        {% if p %}
+        <div class="col-sm-6 col-md-4">
+            <a href="{{url_for('page.show', slug=p.slug)}}" class="nounderline">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h3>{{ p.title }}
+                            <h5><span class="label label-success">Published on:</span><b>  {{ p.created_at.strftime('%d, %b %Y') }}</b></h5>
+                        </h3>
+                        <p>{{ p.description }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

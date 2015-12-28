@@ -1,0 +1,54 @@
+<form action={{url_for('admin.create_widget')}} class="form-horizontal" method="post" role="form" id="widgetForm">
+    <h2>Create Widget</h2>
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+        <div class="col-sm-10">
+            <label for="types">Type:</label>
+            <p>
+                {{ form.types(class='form-control', allow_blank=True, id="widgetTypes", onChange="javascript:replaceWidgetForm(this.options[this.selectedIndex].text);") }}
+            </p>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <label for="name">Name:</label>
+            {{ form.name(type="text", id="name", class="form-control", placeholder="Name", autofocus=true, required=true)}}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <label for="question">Question:</label>
+            {{ form.question(type="text", id="title", class="form-control", placeholder="Title", autofocus=true, required=true)}}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <label for="choice1">Choice 1:</label>
+            {{ form.choice1(type="text", id="choice1", class="form-control", placeholder="Choice 1", autofocus=true, required=true)}}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <label for="choice2">Choice 2:</label>
+            {{ form.choice2(type="text", id="choice2", class="form-control", placeholder="Choice 2", autofocus=true, required=true)}}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <label for="choice3">Choice 3:</label>
+            {{ form.choice3(type="text", id="choice3", class="form-control", placeholder="Choice 3", autofocus=true, required=true)}}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <label for="choice3">Choice 4:</label>
+            {{ form.choice4(type="text", id="choice4", class="form-control", placeholder="Choice 4", autofocus=true, required=true)}}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+        </div>
+    </div>
+</form>

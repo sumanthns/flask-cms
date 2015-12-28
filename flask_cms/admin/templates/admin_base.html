@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+{% block head %}
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="/static/css/spinner.css" type="text/css">
+    <script src="/static/js/jquery-latest.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if title %}
+    <title>{{ title }} - Flask cms Admin</title>
+    {% else %}
+    <title>Welcome to Flask cms admin</title>
+    {% endif %}
+{% endblock %}
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{url_for('admin.index')}}">
+                Admin<span class="glyphicon glyphicon-wrench"></span></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="#">Page</a></li>
+                <li><a href="#">User</a></li>
+                <li><a href="{{url_for('admin.list_widget')}}">Widgets</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_authenticated %}
+                Hi <a href={{url_for('member.show')}}>{{current_user.email}}</a> |
+                <a href={{url_for('security.logout')}} class="btn btn-default btn-danger btn-account">
+                    <span class="glyphicon glyphicon-log-out"></span> Log Out </a>
+                {% else %}
+                <a href={{url_for('security.login')}} class="btn btn-default btn-success btn-account" role="button">
+                    <span class="glyphicon glyphicon-log-in"></span> Log In </a>
+                {% endif %}
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+            {% for category, message in messages %}
+            {% if category == 'error' %}
+            {% set category = 'danger' %}
+            {% set glyph = 'exclamation-sign' %}
+            {% else %}
+            {% set category = 'success' %}
+            {% set glyph = 'ok' %}
+            {% endif %}
+            <div class="alert alert-{{category}}" role="alert">
+                <span class="glyphicon glyphicon-{{glyph}}" aria-hidden="true"></span>
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    {% endwith %}
+    {% block content %}{% endblock %}
+</div>
+</body>
+</html>

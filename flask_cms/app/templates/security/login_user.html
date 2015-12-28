@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <form action={{url_for('security.login')}} class="form-signin" method="post">
+                {{ login_user_form.hidden_tag() }}
+                <h2 class="form-signin-heading">Login</h2>
+                <label for="email" class="sr-only">Email address</label>
+                {{ login_user_form.email(type="email", id="email", class="form-control", placeholder="Email", autofocus=true, required=true)}}
+                <label for="password" class="sr-only">Password</label>
+                {{ login_user_form.password(type="password", id="password", class="form-control", placeholder="Password", autofocus=true, required=true)}}
+                <div class="checkbox">
+                    <label><input name="remember_me" type="checkbox"><b>Remember Me</b></label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+                <a href={{url_for('security.forgot_password')}} >Forgot Password</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
