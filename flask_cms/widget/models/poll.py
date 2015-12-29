@@ -33,6 +33,16 @@ class Poll(db.Model):
         poll.choices = [choice1, choice2, choice3, choice4]
         return poll
 
+    def get_vote_percentage_for_choice(self, choice):
+        if self.total_votes() == 0:
+            return 0
+
+        return choice.vote*100/self.total_votes()
+
+    def total_votes(self):
+        total_votes = sum([c.vote for c in self.choices if c.vote is not None])
+        return total_votes
+
 
 class Choice(db.Model):
     __tablename__ = "choices"

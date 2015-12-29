@@ -1,5 +1,6 @@
 from itertools import izip_longest
-from flask import url_for
+
+from flask import url_for, render_template
 
 
 def get_breadcrumbs(page, breadcrumbs=None):

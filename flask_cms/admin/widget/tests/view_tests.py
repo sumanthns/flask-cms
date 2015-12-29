@@ -85,6 +85,7 @@ class CreateWidgetViewTest(AdminWidgetTest):
                                  })
         self.assertEquals(302, response.status_code)
 
+
 class ShowWidgetViewTest(AdminWidgetTest):
     def test_show_widget_with_component(self):
         poll = Poll(question="fu")
@@ -101,7 +102,7 @@ class ShowWidgetViewTest(AdminWidgetTest):
     def test_show_widget_without_component(self):
         self.login_user(self.admin_user)
         response = self.app.get("/admin/widget/{}".format(self.widget.id))
-        self.assertEquals(200, response.status_code)
+        self.assertEquals(302, response.status_code)
 
     def test_show_widget_as_non_admin(self):
         self.login_user(self.user1)

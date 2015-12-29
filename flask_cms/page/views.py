@@ -18,4 +18,4 @@ class PageView(MethodView):
         if not page.publish:
             abort(404)
 
-        return render_template('{}.html'.format(page.template.name), page=page)
+        return render_template('base_page.html', page=page)

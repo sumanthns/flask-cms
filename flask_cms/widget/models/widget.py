@@ -14,7 +14,7 @@ class Widget(db.Model):
     widget_type_id = db.Column(db.Integer, db.ForeignKey('widget_types.id'))
     pages_widgets = db.relationship("PageWidget", cascade='delete')
 
-    def get_component(self):
+    def get_component_class(self):
         component_name = self.widget_type.name
 
         if component_name is None:
@@ -26,10 +26,10 @@ class Widget(db.Model):
             widget_type, model = wm
             if component_name == widget_type:
                 model = import_string(model)
-                existing_model = model.query.filter_by(widget_id=self.id).first()
-                if existing_model is not None:
-                    return existing_model
-                else:
-                    return model
+                return model
 
         raise WidgetNotSupportedException("Widget {} is not supported".format(component_name))
+
+    def get_component(self):
+        model = self.get_component_class()
+        return model.query.filter_by(widget_id=self.id).first()

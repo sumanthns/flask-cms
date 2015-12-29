@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+{{add_breadcrumbs_snippet(page)|safe}}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-md-9">
+            {% import '{}.html'.format(page.template.name) as page_macro with context %}
+            {{ page_macro.render_page(page) }}
+        </div>
+        {% for widget in page.widgets.all() %}
+        {% import 'widget/{}.html'.format(widget.widget_type.name) as widget_macro with context %}
+        {{ widget_macro.render_widget(widget.get_component(), page) }}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -16,6 +16,7 @@ class BaseConfig(object):
         'flask_cms.member.urls.routes',
         'flask_cms.page.urls.routes',
         'flask_cms.admin.urls.routes',
+        'flask_cms.widget.urls.routes',
     ]
 
     BLUEPRINTS = [
@@ -23,6 +24,7 @@ class BaseConfig(object):
         'flask_cms.member.member',
         'flask_cms.page.page',
         'flask_cms.admin.admin',
+        'flask_cms.widget.widget',
     ]
 
     EXTENSIONS = [

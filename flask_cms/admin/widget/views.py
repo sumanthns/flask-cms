@@ -33,7 +33,7 @@ class CreateWidgetView(AdminView):
             )
             db.session.add(widget)
             db.session.commit()
-            component = widget.get_component()
+            component = widget.get_component_class()
             component = component.create_by_form(form)
             component.widget = widget
             db.session.add(component)
@@ -57,6 +57,10 @@ class ShowWidgetView(AdminView):
         widget = get_object_or_404(Widget, Widget.id == widget_id)
         widget_name = widget.widget_type.name
         component = widget.get_component()
+        if component is None:
+            flash("Widget is empty", "error")
+            return redirect(url_for('admin.list_widget'))
+
         return render_template("widget/{}/show_{}_widget.html".
                                format(widget_name, widget_name),
                                widget=widget,

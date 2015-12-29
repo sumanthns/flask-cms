@@ -1,0 +1,30 @@
+{% macro render_widget(component, page) %}
+<div class="col-md-3">
+    <div class="panel panel-primary">
+        <form action="{{ url_for('widget.poll', slug=page.slug, widget_id=widget.id)}}" method="post" role="form">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-hand-right"></span> {{ component.question }}</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    {% for choice in component.choices %}
+                    <li class="list-group-item">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="choice" value="{{choice.id}}">
+                                {{ choice.description }}
+                            </label>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="panel-footer text-center">
+                <button class="btn btn-primary btn-block btn-sm" type="submit">
+                    Vote</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endmacro %}
