@@ -1,0 +1,51 @@
+{% macro render_widget(component, page) %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    {% for i in range(component.carousel_images.all()|length) %}
+                    <li data-target="#myCarousel" data-slide-to="{{i}}"
+                    {% if i == 0 %}
+                    class="active"
+                    {% endif %}
+                    >
+                    </li>
+                    {% endfor %}
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    {% for image in component.carousel_images %}
+                    <div
+                    {% if component.carousel_images.all().index(image) == 0 %}
+                    class = "item active"
+                    {% else %}
+                    class = "item"
+                    {% endif %}
+                    >
+                    <img src="{{ image.image_link }}" alt="Carousel Image" class = "img-responsive">
+                    <div class="carousel-caption">
+                        <h3>{{ image.image_caption }}</h3>
+                        <p>{{ image.image_description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+</div>
+</div>
+<p></p>
+{% endmacro %}

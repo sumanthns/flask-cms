@@ -38,12 +38,16 @@ class BaseConfig(object):
 
     # supported widgets that admin can create
     WIDGET_CREATE_FORMS = [
-        ('poll', 'flask_cms.admin.widget.forms.PollForm')
+        ('poll', 'flask_cms.admin.widget.forms.PollForm'),
+        ('carousel', 'flask_cms.admin.widget.forms.CarouselForm'),
+        ('split_panel', 'flask_cms.admin.widget.forms.SplitPanelForm'),
     ]
 
     # supported widget models
     WIDGET_MODELS = [
-        ('poll', 'flask_cms.widget.models.poll.Poll')
+        ('poll', 'flask_cms.widget.models.poll.Poll'),
+        ('carousel', 'flask_cms.widget.models.carousel.Carousel'),
+        ('split_panel', 'flask_cms.widget.models.split_panel.SplitPanel'),
     ]
 
     # security configs

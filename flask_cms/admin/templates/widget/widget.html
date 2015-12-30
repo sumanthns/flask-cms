@@ -1,17 +1,8 @@
 {% extends "admin_base.html" %}
-{% block head %}
-{{ super() }}
-<script>
-function replaceWidgetForm(widget_type){
-   $.get("/admin/widget", { type: widget_type })
-       .done(function(data){
-       $("#widgetForm").replaceWith(data);
-       })
-     };
-</script>
-{% endblock %}
-
 {% block content %}
+{% if form.errors %}
+{{ form.errors }}
+{% endif %}
 <div class="container">
     <form action={{url_for('admin.create_widget')}} class="form-horizontal" method="post" role="form" id="widgetForm">
         <h2>Create Widget</h2>

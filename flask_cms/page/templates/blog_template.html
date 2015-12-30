@@ -1,10 +1,10 @@
 {% macro render_page(page)%}
-<div class="jumbotron">
-    <div class="container">
+<div class="container-fluid">
+    <div class="jumbotron">
         <h1>{{page.title}}
             <h5><span class="label label-success">Published on:</span><b>  {{ page.created_at.strftime('%d, %b %Y') }}</b></h5></h1>
         <p>{{page.description}}</p>
     </div>
+    <p>{{page.content|safe}}</p>
 </div>
-<p>{{page.content|safe}}</p>
 {% endmacro %}

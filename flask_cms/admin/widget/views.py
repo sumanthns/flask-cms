@@ -26,6 +26,7 @@ class CreateWidgetView(AdminView):
             WidgetType, WidgetType.id == widget_type_id)
         form = WidgetFormFactory(
             type=widget_type.name).get_widget_form()
+
         if form.validate_on_submit():
             widget = Widget(
                 name=form.name.data,
@@ -64,7 +65,7 @@ class ShowWidgetView(AdminView):
         return render_template("widget/{}/show_{}_widget.html".
                                format(widget_name, widget_name),
                                widget=widget,
-                               poll=component)
+                               component=component)
 
 
 class WidgetIndexView(AdminView):

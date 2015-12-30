@@ -1,0 +1,61 @@
+{% macro render_widget(component, page) %}
+{% if component.size == '100%' %}
+{% set multimedia_width_class = 'col-md-12'%}
+{% set text_width_class = 'col-md-12'%}
+{% elif component.size == '75%' %}
+{% set multimedia_width_class = 'col-md-8'%}
+{% set text_width_class = 'col-md-4'%}
+{% elif component.size == '25%' %}
+{% set multimedia_width_class = 'col-md-4'%}
+{% set text_width_class = 'col-md-8'%}
+{% else %}
+{% set multimedia_width_class = 'col-md-6'%}
+{% set text_width_class = 'col-md-6'%}
+{% endif %}
+<div class="container-fluid">
+    <div class="row">
+        {% if component.align == 'left' %}
+        <div class="col-xs-12 {{multimedia_width_class}}">
+            {{ render_multimedia(component) }}
+        </div>
+        {% else %}
+        <div class="col-xs-12 {{text_width_class}}">
+            <div class="panel">
+                <div class='panel-heading'><h2>{{ component.title }}</h2></div>
+                <div class='panel-body'>{{ component.content }}</div>
+            </div>
+        </div>
+        {% endif %}
+        {% if component.align == 'right' %}
+        <div class="col-xs-12 {{multimedia_width_class}}">
+            {{ render_multimedia(component) }}
+        </div>
+        {% else %}
+        <div class="col-xs-12 {{text_width_class}}">
+            <div class="panel">
+                <div class='panel-heading'><h2>{{ component.title }}</h2></div>
+                <div class='panel-body'>{{ component.content }}</div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<p></p>
+{% endmacro %}
+
+{% macro render_multimedia(component)%}
+{% if component.type == 'image'%}
+<img src="{{component.link}}" alt="multimedia" class="img-responsive">
+{% elif component.type == 'video'%}
+<video height="100%" width="100%" controls>
+    <source src="{{component.link}}" type="video/mp4">
+    <source src="{{component.link}}" type="video/ogg">
+</video>
+{% elif component.type == 'audio'%}
+<audio controls>
+    <source src="{{component.link}}" type="audio/ogg">
+    <source src="{{component.link}}" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+{% endif %}
+{% endmacro %}

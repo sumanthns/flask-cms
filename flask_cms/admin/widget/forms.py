@@ -1,8 +1,8 @@
 from flask_wtf import Form
 from werkzeug.utils import import_string
 
-from wtforms import StringField, SelectField
-from wtforms.validators import DataRequired
+from wtforms import StringField, SelectField, FieldList, FormField, TextField, TextAreaField
+from wtforms.validators import DataRequired, InputRequired
 
 from flask_cms.widget.models.widget_type import WidgetType
 
@@ -28,6 +28,35 @@ class PollForm(WidgetForm):
     def __init__(self):
         WidgetForm.__init__(self)
         self.types.data = WidgetType.query.filter_by(name='poll').first().id
+
+
+class CarouselImageForm(Form):
+    image_link = StringField('Image Link')
+    image_caption = StringField('Caption')
+    image_description = StringField('Description')
+
+
+class CarouselForm(WidgetForm):
+    images = FieldList(FormField(CarouselImageForm), min_entries=1)
+
+    def __init__(self):
+        WidgetForm.__init__(self)
+        self.types.data = WidgetType.query.filter_by(name='carousel').first().id
+
+
+class SplitPanelForm(WidgetForm):
+    title = StringField('Title', validators=[DataRequired()])
+    content = TextAreaField('Content', validators=[DataRequired()])
+    multimedia_types = SelectField('Type', choices=[("image", "image"), ("video", "video"), ("audio", "audio")],
+                                   validators=[DataRequired()])
+    align = SelectField('Align', choices=[("right", "right"), ("left", "left")], validators=[DataRequired()])
+    size = SelectField('size', choices=[("100%", "100%"), ("75%", "75%"), ("50%", "50%"), ("25%", "25%")],
+                       validators=[DataRequired()])
+    link = StringField('Link', validators=[DataRequired()])
+
+    def __init__(self):
+        WidgetForm.__init__(self)
+        self.types.data = WidgetType.query.filter_by(name='split_panel').first().id
 
 
 class WidgetNotSupportedException(Exception):
