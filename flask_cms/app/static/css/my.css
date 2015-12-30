@@ -20,3 +20,5 @@ nounderline:hover,
 .nounderline:hover {
    text-decoration: none !important;
 }
+
+#map-container { height: 400px }

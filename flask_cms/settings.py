@@ -41,6 +41,7 @@ class BaseConfig(object):
         ('poll', 'flask_cms.admin.widget.forms.PollForm'),
         ('carousel', 'flask_cms.admin.widget.forms.CarouselForm'),
         ('split_panel', 'flask_cms.admin.widget.forms.SplitPanelForm'),
+        ('map', 'flask_cms.admin.widget.forms.MapForm'),
     ]
 
     # supported widget models
@@ -48,6 +49,7 @@ class BaseConfig(object):
         ('poll', 'flask_cms.widget.models.poll.Poll'),
         ('carousel', 'flask_cms.widget.models.carousel.Carousel'),
         ('split_panel', 'flask_cms.widget.models.split_panel.SplitPanel'),
+        ('map', 'flask_cms.widget.models.map.Map'),
     ]
 
     # security configs

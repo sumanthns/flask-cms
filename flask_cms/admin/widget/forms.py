@@ -3,6 +3,7 @@ from werkzeug.utils import import_string
 
 from wtforms import StringField, SelectField, FieldList, FormField, TextField, TextAreaField
 from wtforms.validators import DataRequired, InputRequired
+from flask_cms.utils import CKTextAreaField
 
 from flask_cms.widget.models.widget_type import WidgetType
 
@@ -57,6 +58,17 @@ class SplitPanelForm(WidgetForm):
     def __init__(self):
         WidgetForm.__init__(self)
         self.types.data = WidgetType.query.filter_by(name='split_panel').first().id
+
+
+class MapForm(WidgetForm):
+    title = StringField('Title', validators=[DataRequired()])
+    address = CKTextAreaField('Content', validators=[DataRequired()])
+    longitude = StringField('Title', validators=[DataRequired()])
+    latitude = StringField('Title', validators=[DataRequired()])
+
+    def __init__(self):
+        WidgetForm.__init__(self)
+        self.types.data = WidgetType.query.filter_by(name='map').first().id
 
 
 class WidgetNotSupportedException(Exception):

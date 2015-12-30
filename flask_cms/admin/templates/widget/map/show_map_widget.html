@@ -1,0 +1,23 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+<h2>{{ widget.name }}</h2>
+<script>
+$(document).ready(function(){
+    google.maps.event.addDomListener(window, 'load', init_map({{ component.latitude }}, {{ component.longitude }}, "{{ component.title }}"));
+ });
+</script>
+
+<div class="container-fluid">
+    <div class="row">
+        <div id="map-outer" class="col-md-12">
+            <div id="address" class="col-md-4">
+                <h2>{{ component.title }}</h2>
+                <address>
+                    {{ component.address|safe }}
+                </address>
+            </div>
+            <div id="map-container" class="col-md-8"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
