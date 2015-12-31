@@ -16,7 +16,7 @@ class AdminPageTest(TestCase):
             email='fu@bar.com', password='password',
             active=True)
         self.template = self._create_template(
-            name="test_t",
+            name="blog_template",
             description="desc",
         )
         self.page = self._create_page(
@@ -301,4 +301,20 @@ class RemoveWidgetFromPageViewTest(AdminPageTest):
     def test_remove_widget_from_page_as_anonymous(self):
         response = self.app.get("/admin/page/{}/widget/{}/remove".
                                 format(self.page.slug, self.widget.id))
+        self.assertEquals(302, response.status_code)
+
+
+class ShowPagePreviewViwewTest(AdminPageTest):
+    def test_show_preview_as_admin(self):
+        self.login_user(self.admin_user)
+        response = self.app.get('/admin/page/preview/{}'.format(self.page.slug))
+        self.assertEquals(200, response.status_code)
+
+    def test_show_preview_as_non_admin(self):
+        self.login_user(self.user1)
+        response = self.app.get('/admin/page/preview/{}'.format(self.page.slug))
+        self.assertEquals(302, response.status_code)
+
+    def test_show_preview_as_anonymous(self):
+        response = self.app.get('/admin/page/preview/{}'.format(self.page.slug))
         self.assertEquals(302, response.status_code)

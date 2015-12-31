@@ -129,3 +129,9 @@ class RemoveWidgetFromPageView(AdminView):
         flash("Successfully removed widget - {} from page - {}".
               format(widget.name, page.slug))
         return redirect(url_for("admin.edit_page", slug=page.slug))
+
+
+class ShowPagePreviewView(AdminView):
+    def get(self, slug):
+        page = get_object_or_404(Page, Page.slug == slug)
+        return render_template('base_page.html', page=page)

@@ -1,6 +1,7 @@
-from flask import render_template
+from flask import render_template, flash, url_for
 from flask.views import MethodView
 from werkzeug.exceptions import abort
+from werkzeug.utils import redirect
 
 from flask_cms.page.models import Page
 from flask.ext.security import current_user
@@ -13,7 +14,8 @@ class PageView(MethodView):
 
         if page.login_required:
             if not current_user.is_authenticated:
-                abort(404)
+                flash("Please login to view this page", "error")
+                return redirect(url_for('core.index'))
 
         if not page.publish:
             abort(404)

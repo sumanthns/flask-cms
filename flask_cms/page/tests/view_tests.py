@@ -39,9 +39,10 @@ class PageViewTest(TestCase):
     def test_get_protects_pages_require_login(self):
         response = self.app.get("/page/test_login")
 
-        self.assertEquals(response.status_code, 404)
+        self.assertEquals(response.status_code, 302)
 
     def test_get_protects_unpublished_page(self):
+        self.login_user(self.user1)
         response = self.app.get("/page/test_publish")
 
         self.assertEquals(response.status_code, 404)
