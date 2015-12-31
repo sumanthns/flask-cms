@@ -14,6 +14,7 @@ class EditPage(Form):
     title = StringField('Title', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
     templates = SelectField('templates', validators=[DataRequired()])
+    header_image = StringField('Header Image')
     content = CKTextAreaField('Content')
     login_required = BooleanField("login_required", default=False)
     show_in_nav = BooleanField("show_in_nav", default=False)
@@ -34,6 +35,7 @@ class EditPage(Form):
             self.show_in_nav.data = page.show_in_nav
             self.publish.data = page.publish
             self.templates.data = page.template_id
+            self.header_image.data = page.header_image
 
     def validate(self):
         if not Form.validate(self):

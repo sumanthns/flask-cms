@@ -1,9 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 {% if not page.slug == 'home' or page.slug == 'index'%}
-{{add_breadcrumbs_snippet(page)|safe}}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            {{add_breadcrumbs_snippet(page)|safe}}
+        </div>
+    </div>
+</div>
 {% endif %}
-<div class="container-fluid">
+<div class="container">
     {% import '{}.html'.format(page.template.name) as page_macro with context %}
     {{ page_macro.render_page(page) }}
 

@@ -1,10 +1,11 @@
+from flask import flash
 from flask_wtf import Form
 from werkzeug.utils import import_string
+from wtforms import StringField, SelectField, FieldList, FormField, TextAreaField
+from wtforms.validators import DataRequired
 
-from wtforms import StringField, SelectField, FieldList, FormField, TextField, TextAreaField
-from wtforms.validators import DataRequired, InputRequired
+from flask_cms.page.models import Page
 from flask_cms.utils import CKTextAreaField
-
 from flask_cms.widget.models.widget_type import WidgetType
 
 
@@ -43,6 +44,33 @@ class CarouselForm(WidgetForm):
     def __init__(self):
         WidgetForm.__init__(self)
         self.types.data = WidgetType.query.filter_by(name='carousel').first().id
+
+
+class GridPageForm(Form):
+    page_slug = StringField('Page Slug', validators=[DataRequired()])
+
+
+class GridForm(WidgetForm):
+    grid_pages = FieldList(FormField(GridPageForm), min_entries=1)
+    grid_types = SelectField('grid_type', validators=[DataRequired()])
+
+    def __init__(self):
+        from flask_cms.app import app
+        WidgetForm.__init__(self)
+        self.types.data = WidgetType.query.filter_by(name='grid').first().id
+        self.grid_types.choices = [(t, t) for t in app.config['GRID_TYPES']]
+
+    def validate(self):
+        if not WidgetForm.validate(self):
+            return False
+
+        for page in self.grid_pages:
+            page_exists = Page.query.filter_by(slug=page.page_slug.data).first()
+            if page_exists is None:
+                flash("Page {} does not exist".format(page.page_slug.data), "error")
+                return False
+
+        return True
 
 
 class SplitPanelForm(WidgetForm):

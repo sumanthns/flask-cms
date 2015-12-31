@@ -1,0 +1,10 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+<h2>{{ widget.name }}</h2>
+<div class="container">
+    <div class="row">
+        {% import 'widget/grid/{}.html'.format(component.grid_type) as grid_macro with context %}
+        {{ grid_macro.render_grid(component) }}
+    </div>
+</div>
+{% endblock %}

@@ -17,8 +17,6 @@ class Carousel(db.Model):
         carousel = Carousel()
         carousel.carousel_images = []
         for image in form.images:
-            print image
-            print image.image_link.data
             carousel_image = CarouselImage(
                 image_link=image.image_link.data,
                 image_caption=image.image_caption.data,

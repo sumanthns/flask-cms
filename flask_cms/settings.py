@@ -42,6 +42,7 @@ class BaseConfig(object):
         ('carousel', 'flask_cms.admin.widget.forms.CarouselForm'),
         ('split_panel', 'flask_cms.admin.widget.forms.SplitPanelForm'),
         ('map', 'flask_cms.admin.widget.forms.MapForm'),
+        ('grid', 'flask_cms.admin.widget.forms.GridForm'),
     ]
 
     # supported widget models
@@ -50,6 +51,12 @@ class BaseConfig(object):
         ('carousel', 'flask_cms.widget.models.carousel.Carousel'),
         ('split_panel', 'flask_cms.widget.models.split_panel.SplitPanel'),
         ('map', 'flask_cms.widget.models.map.Map'),
+        ('grid', 'flask_cms.widget.models.grid.Grid'),
+    ]
+
+    # available grid types
+    GRID_TYPES = [
+        '1_by_3_grid',
     ]
 
     # security configs

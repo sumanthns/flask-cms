@@ -32,6 +32,7 @@ class EditPageView(AdminView):
             page.show_in_nav = 'show_in_nav' in request.form
             page.publish = 'publish' in request.form
             page.template_id = request.form.get('templates')
+            page.header_image = request.form.get('header_image')
 
             db.session.commit()
             return redirect(url_for('admin.edit_page', slug=page.slug))

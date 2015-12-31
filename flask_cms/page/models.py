@@ -15,6 +15,7 @@ class Page(db.Model):
     slug = db.Column(db.String(255), unique=True)
     title = db.Column(db.String(255))
     description = db.Column(db.String(255))
+    header_image = db.Column(db.String(255))
     login_required = db.Column(db.Boolean, default=False)
     show_in_nav = db.Column(db.Boolean, default=False)
     publish = db.Column(db.Boolean, default=False)
@@ -28,6 +29,7 @@ class Page(db.Model):
     widgets = db.relationship("Widget", secondary=PageWidget.__tablename__,
                               lazy="dynamic", )
     pages_widgets = db.relationship("PageWidget", cascade='delete', )
+    grid_pages = db.relationship("GridPage", cascade='delete', )
 
     def children_ordered_by_latest(self):
         return self.children.order_by(Page.created_at.desc()).all()

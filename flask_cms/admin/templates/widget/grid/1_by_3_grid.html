@@ -1,0 +1,15 @@
+{% macro render_grid(component) %}
+{% for page in component.pages %}
+<div class="col-xs-12 col-md-4">
+    <div class="thumbnail">
+        <img alt="100%x200" class="img-responsive" src="{{ page.header_image }}">
+        <div class="caption">
+            <h3>{{ page.title }}</h3>
+            <p>{{ page.description}}<p>
+        </div>
+        <a href="{{url_for('page.show',slug=page.slug)}}" class="btn btn-primary" role="button">More</a></p>
+    </div>
+</div>
+{% endfor %}
+<p></p>
+{% endmacro %}

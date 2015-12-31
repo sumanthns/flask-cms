@@ -1,5 +1,5 @@
 {% macro render_page(page)%}
-<div class="container-fluid">
+<div class="container">
     {% for group in grouper(page.children_ordered_by_latest(), 3) %}
     <div class="row">
         {% for p in group %}
@@ -7,6 +7,7 @@
         <div class="col-sm-6 col-md-4">
             <a href="{{url_for('page.show', slug=p.slug)}}" class="nounderline">
                 <div class="thumbnail">
+                    <img alt="100%x200" class="img-responsive" src="{{ p.header_image }}">
                     <div class="caption">
                         <h3>{{ p.title }}
                             <h5><span class="label label-success">Published on:</span><b>  {{ p.created_at.strftime('%d, %b %Y') }}</b></h5>

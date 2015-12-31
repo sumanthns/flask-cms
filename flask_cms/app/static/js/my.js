@@ -1,5 +1,4 @@
 function addCarouselImageField(){
-    var max_fields      = 10; //maximum input boxes allowed
     var wrapper         = $("#carouselImageWrapper"); //Fields wrapper
     var carouselImageCount = $("#carouselImageWrapper #carouselImage").length;
     var csrf_token_name = "images-" + carouselImageCount + "-csrf_token"
@@ -10,7 +9,7 @@ function addCarouselImageField(){
     $(wrapper).append('<div id="carouselImage">\
         <hr class="col-sm-10">\
         <div class="col-sm-10">\
-            <a role="button" id="addCarouselFieldButton" class="btn btn-sm btn-danger pull-right" onclick="javascript:removeCarouselImageField($(this))"><span class="glyphicon glyphicon-minus"></span></a>\
+            <a role="button" id="removeCarouselFieldButton" class="btn btn-sm btn-danger pull-right" onclick="javascript:removeField($(this))"><span class="glyphicon glyphicon-minus"></span></a>\
         </div>\
         <div style="display:none;"><input id='+csrf_token_name+' name='+csrf_token_name+' type="hidden" value="None"></div>\
         <div class="form-group">\
@@ -32,10 +31,6 @@ function addCarouselImageField(){
             </div>\
         </div>\
     </div>'); //add input box
-};
-
-function removeCarouselImageField(elem){
-    elem.parent('div').parent('div').remove();
 };
 
 function replaceWidgetForm(widget_type){
@@ -62,4 +57,29 @@ function init_map(lat,lng, mapTitle) {
          var_mapoptions);
 
  var_marker.setMap(var_map);
+};
+
+function addGridPageField(){
+    var wrapper         = $("#gridPageWrapper"); //Fields wrapper
+    var gridPageCount = $("#gridPageWrapper #gridPage").length;
+    var csrf_token_name = "grid_pages-" + gridPageCount + "-csrf_token"
+    var page_slug_name = "grid_pages-" + gridPageCount +"-page_slug"
+
+    $(wrapper).append('<div id="gridPage">\
+        <hr class="col-sm-10">\
+        <div class="col-sm-10">\
+            <a role="button" id="removeGridPageButton" class="btn btn-sm btn-danger pull-right" onclick="javascript:removeField($(this))"><span class="glyphicon glyphicon-minus"></span></a>\
+        </div>\
+        <div style="display:none;"><input id='+csrf_token_name+' name='+csrf_token_name+' type="hidden" value="None"></div>\
+        <div class="form-group">\
+            <div class="col-sm-10">\
+                <label for='+page_slug_name+'>Page Slug</label>:\
+                <input autofocus="" class="form-control" id='+page_slug_name+' name='+page_slug_name+' required="" type="text" value="">\
+            </div>\
+        </div>\
+    </div>'); //add input box
+};
+
+function removeField(elem){
+    elem.parent('div').parent('div').remove();
 };
