@@ -24,18 +24,27 @@ class AdminGridTest(TestCase):
             title='fu1',
             description='bar1',
             slug='111',
+            publish=True,
         )
         self.page2 = self._create_model(
             Page,
             title='fu2',
             description='bar2',
             slug='222',
+            publish=True,
         )
         self.page3 = self._create_model(
             Page,
             title='fu3',
             description='bar3',
             slug='333',
+            publish=True,
+        )
+        self.page4 = self._create_model(
+            Page,
+            title='fu4',
+            description='bar4',
+            slug='444',
         )
 
     def test_create_grid_as_admin(self):
@@ -69,6 +78,20 @@ class AdminGridTest(TestCase):
                           "grid_pages-0-page_slug": "bpp",
                           "grid_pages-1-page_slug": "dsada",
                           "grid_pages-2-page_slug": "dsad",
+                      })
+        grid_widget = self._get_model(Widget, name="test_grid")
+        assert grid_widget is None
+        assert Grid.query.first() is None
+        assert GridPage.query.first() is None
+
+    def test_create_grid_with_unpublished_pages_as_admin(self):
+        self.login_user(self.admin_user)
+        self.app.post("/admin/widget",
+                      data={
+                          "name": "test_grid",
+                          "types": self.widget_type.id,
+                          "grid_types": "1_by_3_grid",
+                          "grid_pages-0-page_slug": self.page4.slug,
                       })
         grid_widget = self._get_model(Widget, name="test_grid")
         assert grid_widget is None

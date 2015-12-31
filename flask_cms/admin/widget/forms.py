@@ -65,7 +65,8 @@ class GridForm(WidgetForm):
             return False
 
         for page in self.grid_pages:
-            page_exists = Page.query.filter_by(slug=page.page_slug.data).first()
+            page_exists = Page.query.filter_by(
+                slug=page.page_slug.data, publish=True).first()
             if page_exists is None:
                 flash("Page {} does not exist".format(page.page_slug.data), "error")
                 return False
