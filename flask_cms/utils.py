@@ -1,3 +1,4 @@
+from sqlalchemy import and_
 from sqlalchemy.orm import exc
 from werkzeug.exceptions import abort
 from wtforms import TextAreaField
@@ -6,7 +7,7 @@ from wtforms.widgets import TextArea
 
 def get_object_or_404(model, *criterion):
     try:
-        return model.query.filter(*criterion).one()
+        return model.query.filter(and_(*criterion)).one()
     except exc.NoResultFound, exc.MultipleResultsFound:
         abort(404)
 

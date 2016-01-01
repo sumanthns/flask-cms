@@ -17,6 +17,7 @@ class BaseConfig(object):
         'flask_cms.page.urls.routes',
         'flask_cms.admin.urls.routes',
         'flask_cms.widget.urls.routes',
+        'flask_cms.search.urls.routes',
     ]
 
     BLUEPRINTS = [
@@ -25,15 +26,18 @@ class BaseConfig(object):
         'flask_cms.page.page',
         'flask_cms.admin.admin',
         'flask_cms.widget.widget',
+        'flask_cms.search.search',
     ]
 
     EXTENSIONS = [
         'db',
+        'csrf',
     ]
 
     CONTEXT_PROCESSORS = [
         'flask_cms.page.context_processors.create_breadcrumbs_snippet',
         'flask_cms.page.context_processors.add_grouper',
+        'flask_cms.search.context_processors.add_search_form',
     ]
 
     # supported widgets that admin can create
@@ -59,6 +63,16 @@ class BaseConfig(object):
         '1_by_3_grid',
     ]
 
+    # search [model, (searchable_columns), (columns_to_select)]
+    SEARCHABLE_MODELS = [
+        ['flask_cms.page.models.Page',
+         ('title', 'description', 'content'),
+         ('title', 'description', 'slug'), ],
+        ['flask_cms.app.models.users.User',
+         ('first_name', 'last_name', 'email'),
+         ('first_name', 'last_name', "email", "id"), ],
+    ]
+
     # security configs
     SECURITY_PASSWORD_HASH = "bcrypt"
     SECURITY_PASSWORD_SALT = "secret_password_salt"
@@ -73,7 +87,6 @@ class TestConfig(BaseConfig):
 
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = 'mysql://root@localhost/flaskcms'
-    WTF_CSRF_ENABLED = False
 
 
 class ProductionConfig(BaseConfig):

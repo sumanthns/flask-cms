@@ -3,10 +3,12 @@ from flask.views import MethodView
 from flask.ext.security import current_user, \
     login_required
 from flask.ext.security.utils import encrypt_password
+from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
 from flask_cms.app.models.users import User
 from flask_cms.ext import db
 from flask_cms.member.forms import MemberForm, ChangePasswordForm
+from flask_cms.utils import get_object_or_404
 
 
 class MemberView(MethodView):
@@ -34,6 +36,18 @@ class MemberView(MethodView):
             return redirect(
                 url_for('member.show'))
         return render_template('member.html', form=form)
+
+
+class OtherMemberView(MethodView):
+    decorators = [login_required]
+
+    def get(self, member_id):
+        if current_user.id == int(member_id):
+            form = MemberForm(current_user)
+            return render_template('member.html', form=form)
+
+        user = get_object_or_404(User, User.id == member_id)
+        return render_template("other_member.html", user=user)
 
 
 class ChangePasswordView(MethodView):

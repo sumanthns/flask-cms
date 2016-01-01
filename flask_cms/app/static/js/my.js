@@ -5,13 +5,14 @@ function addCarouselImageField(){
     var image_link_name = "images-" + carouselImageCount +"-image_link"
     var image_caption_name = "images-" + carouselImageCount +"-image_caption"
     var image_description_name = "images-" + carouselImageCount +"-image_description"
+    var csrftoken = $("#carouselImageWrapper #carouselImage #images-0-csrf_token").attr('value')
 
     $(wrapper).append('<div id="carouselImage">\
         <hr class="col-sm-10">\
         <div class="col-sm-10">\
             <a role="button" id="removeCarouselFieldButton" class="btn btn-sm btn-danger pull-right" onclick="javascript:removeField($(this))"><span class="glyphicon glyphicon-minus"></span></a>\
         </div>\
-        <div style="display:none;"><input id='+csrf_token_name+' name='+csrf_token_name+' type="hidden" value="None"></div>\
+        <div style="display:none;"><input id='+csrf_token_name+' name='+csrf_token_name+' type="hidden" value='+csrftoken+'></div>\
         <div class="form-group">\
             <div class="col-sm-10">\
                 <label for='+image_link_name+'>Image Link</label>:\
@@ -64,13 +65,14 @@ function addGridPageField(){
     var gridPageCount = $("#gridPageWrapper #gridPage").length;
     var csrf_token_name = "grid_pages-" + gridPageCount + "-csrf_token"
     var page_slug_name = "grid_pages-" + gridPageCount +"-page_slug"
+    var csrftoken = $("#gridPageWrapper #gridPage #grid_pages-0-csrf_token").attr('value')
 
     $(wrapper).append('<div id="gridPage">\
         <hr class="col-sm-10">\
         <div class="col-sm-10">\
             <a role="button" id="removeGridPageButton" class="btn btn-sm btn-danger pull-right" onclick="javascript:removeField($(this))"><span class="glyphicon glyphicon-minus"></span></a>\
         </div>\
-        <div style="display:none;"><input id='+csrf_token_name+' name='+csrf_token_name+' type="hidden" value="None"></div>\
+        <div style="display:none;"><input id='+csrf_token_name+' name='+csrf_token_name+' type="hidden" value='+csrftoken+'></div>\
         <div class="form-group">\
             <div class="col-sm-10">\
                 <label for='+page_slug_name+'>Page Slug</label>:\

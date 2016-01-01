@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="text-center">
+                <img src="{{user.avatar(100)}}">
+                <p><a href="https://en.gravatar.com/">Powered by gravatar</a></p>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-6">
+            <h3>{{user.first_name}} {{user.last_name}}</h3>
+            <h3>Email: {{user.email}}</h3>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

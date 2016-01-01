@@ -1,0 +1,13 @@
+{% macro render_search_results(users) %}
+<div class="container">
+    <h2>Users</h2>
+    {% for user in users %}
+    <article class="row">
+        <div class="col-xs-12 col-md-12">
+            <h3><a href="{{url_for('member.member_show',member_id=user.id)}}" title="">{{user.first_name}} {{user.last_name}}</a></h3>
+            <p><b>Email: </b>{{user.email}}</p>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+{% endmacro %}

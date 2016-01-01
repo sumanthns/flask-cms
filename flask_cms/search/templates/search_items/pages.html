@@ -1,0 +1,13 @@
+{% macro render_search_results(pages) %}
+<div class="container">
+    <h2>Pages</h2>
+    {% for page in pages %}
+    <article class="row">
+        <div class="col-xs-12 col-md-12">
+            <h3><a href="{{url_for('page.show',slug=page.slug)}}" title="">{{page.title}}</a></h3>
+            <p>{{page.description}}</p>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+{% endmacro %}

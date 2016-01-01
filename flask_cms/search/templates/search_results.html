@@ -1,0 +1,15 @@
+{% extends "base.html"%}
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% if results|length > 0 %}
+            {% for k, v in results.iteritems() %}
+                {% import "search_items/{}.html".format(k) as search_macro with context %}
+                {{ search_macro.render_search_results(v) }}
+            {% endfor %}
+        {% else %}
+            <h2> Sorry, no results found </h2>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

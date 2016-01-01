@@ -1,3 +1,4 @@
+from flask_cms.ext import db
 from flask_cms.testing import TestCase
 
 
@@ -47,6 +48,26 @@ class MemberViewTest(TestCase):
 
         self.assertEquals(None, user.first_name)
         self.assertEquals(None, user.last_name)
+
+
+class OtherMemberViewTest(TestCase):
+    def setUp(self):
+        TestCase.setUp(self)
+        self.user1 = self._create_user(
+            email='fu@bar.com', password='password',
+            active=True)
+        self.user2 = self._create_user(
+            email='ku@kar.com', password='password',
+            active=True)
+
+    def test_a_logged_user_can_check_details_of_other_active_user(self):
+        self.login_user(self.user1)
+        response = self.app.get("/member/{}".format(self.user2.id))
+        self.assertEquals(200, response.status_code)
+
+    def test_anonymous_user_cannot_check_details_of_active_user(self):
+        response = self.app.get("/member/{}".format(self.user2.id))
+        self.assertEquals(302, response.status_code)
 
 
 class ChangePasswordTest(TestCase):
