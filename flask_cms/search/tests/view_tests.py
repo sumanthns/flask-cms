@@ -35,9 +35,9 @@ class SearchViewTest(TestCase):
 
     def test_get_with_empty_keyword(self):
         response = self.app.get("/search?q=")
-        self.assertEquals(404, response.status_code)
+        self.assertEquals(302, response.status_code)
         response = self.app.get("/search?q=     ")
-        self.assertEquals(404, response.status_code)
+        self.assertEquals(302, response.status_code)
 
     def test_get_with_keyword(self):
         response = self.app.get("/search?q=title")

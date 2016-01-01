@@ -1,18 +1,12 @@
 {% macro render_page(page)%}
-<div class="jumbotron">
-    <div class="container">
+<div class="container">
+    <div class="jumbotron">
         <img alt="100%x200" class="img-responsive" src="{{ page.header_image }}">
         <h1>{{page.title}}
             <h5><span class="label label-success">Published on:</span><b>  {{ page.created_at.strftime('%d, %b %Y') }}</b></h5></h1>
         <p>{{page.description}}</p>
     </div>
-</div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12 col-md-12">
-            <p>{{page.content|safe}}</p>
-        </div>
-    </div>
+    <p>{{page.content|safe}}</p>
 </div>
 {% endmacro %}

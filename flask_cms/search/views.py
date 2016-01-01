@@ -1,8 +1,8 @@
-from flask import request, render_template, flash
+from flask import request, render_template, flash, url_for
 from flask.views import MethodView
 from sqlalchemy import text, or_
 from werkzeug.exceptions import abort
-from werkzeug.utils import import_string
+from werkzeug.utils import import_string, redirect
 
 
 class SearchView(MethodView):
@@ -40,7 +40,7 @@ class SearchView(MethodView):
         q = request.args.get("q", None, type=str)
         if not q or not q.strip():
             flash("Keyword cannot be empty", "error")
-            abort(404)
+            return redirect(url_for('core.index'))
 
         q = q.strip()
         results = self._get_search_results(q)
