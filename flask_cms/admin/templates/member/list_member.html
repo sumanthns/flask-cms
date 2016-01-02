@@ -1,0 +1,42 @@
+{%extends "admin_base.html"%}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8 col-md-offset-2">
+            <h2>Manage Roles
+                <a href="{{url_for('admin.create_role')}}" class="btn btn-info btn-sm" role="button">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </h2>
+            <ul class="list-group">
+                {% for role in roles %}
+                <li class="list-group-item">
+                    <h3> {{role.name}}
+                        <a href="{{url_for('admin.delete_role', role_id=role.id)}}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')" role="button">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                    </h3>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-xs-12 col-md-8 col-md-offset-2">
+            <h2>Manage Members
+                <a href="{{url_for('admin.create_member')}}" class="btn btn-info btn-sm" role="button">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </h2>
+            <ul class="list-group">
+                {% for member in members %}
+                <li class="list-group-item">
+                    <a href="{{url_for('admin.edit_member', member_id=member.id)}}"> {{member.first_name}} {{member.last_name}}</a>
+                    <a href="{{url_for('admin.delete_member', member_id=member.id)}}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')" role="button">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

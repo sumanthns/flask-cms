@@ -14,6 +14,7 @@ class TestCase(unittest.TestCase):
         self.app = app.test_client()
         self.app_context = app.app_context()
         self.app_context.push()
+        db.drop_all()
         db.create_all()
         self.admin_role = self._create_admin_role()
 

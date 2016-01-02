@@ -1,0 +1,42 @@
+{% extends "admin_base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8">
+            {% if form.member %}
+            <form action={{url_for('admin.edit_member',member_id=form.member.id)}} class="form-horizontal" method="post" role="form">
+                <h2 class="">Edit Member</h2>
+                {%else%}
+                <form action={{url_for('admin.create_member')}} class="form-horizontal" method="post" role="form">
+                    {%endif%}
+                    {{form.hidden_tag()}}
+                    <div class="form-group">
+                        <label for="first_name">First Name:</label>
+                        {{form.first_name(type="text", class="form-control", id="first_name", placeholder="First Name", required=true)}}
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name:</label>
+                        {{form.last_name(type="text", class="form-control", id="last_name", placeholder="Last Name", required=true)}}
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        {{form.email(type="text", class="form-control", id="email", placeholder="Email", required=true)}}
+                    </div>
+                    <div class="form-group">
+                        <label for="roles">Roles:</label>
+                        {{form.roles}}
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            {% if form.member %}
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+                            {% else %}
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
