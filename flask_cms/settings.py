@@ -37,6 +37,7 @@ class BaseConfig(object):
     CONTEXT_PROCESSORS = [
         'flask_cms.page.context_processors.create_breadcrumbs_snippet',
         'flask_cms.page.context_processors.add_grouper',
+        'flask_cms.page.context_processors.add_navbar',
         'flask_cms.search.context_processors.add_search_form',
     ]
 

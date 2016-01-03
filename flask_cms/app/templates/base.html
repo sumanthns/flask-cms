@@ -28,15 +28,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href={{url_for('core.index')}}>Home</a>
+            <a class="navbar-brand" href={{url_for('core.index')}}>{% if title %} {{title}} {%else%} Flask Cms {%endif%}</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact Us</a></li>
-            </ul>
+            {{ navbar()|safe }}
+
             <form action="{{url_for('search.search')}}" class="navbar-form navbar-left" method="get" role="search">
                 {% set search = search_form() %}
 
