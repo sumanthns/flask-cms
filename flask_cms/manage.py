@@ -2,6 +2,7 @@ from flask.ext.script import Command, Server, \
     Manager, prompt, prompt_bool
 from flask.ext.migrate import Migrate, MigrateCommand
 from flask.ext.security.utils import encrypt_password
+import datetime
 from flask_cms.app import app
 from flask_cms.ext import db
 from flask_cms.app.models import *
@@ -50,7 +51,8 @@ class SetUpCommand(Command):
             role = self.member_role
 
         password = encrypt_password(password)
-        user = User(email=email, password=password, active=True, roles=[role])
+        user = User(email=email, password=password, active=True, roles=[role],
+                    confirmed_at=datetime.datetime.now())
         db.session.add(user)
         db.session.commit()
 

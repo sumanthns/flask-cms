@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <form action={{url_for('security.register')}} class="form-signin" method="post">
+                {{ register_user_form.hidden_tag() }}
+                {{ flash_form_errors(register_user_form)|safe }}
+                <h2 class="form-signin-heading">Register</h2>
+                <label for="email" class="sr-only">Email address</label>
+                {{ register_user_form.email(type="email", id="email", class="form-control", placeholder="Email", autofocus=true, required=true)}}
+                <label for="password" class="sr-only">Password</label>
+                {{ register_user_form.password(type="password", id="password", class="form-control", placeholder="Password", autofocus=true, required=true)}}
+                {%if not confirmable()%}
+                <label for="password_confirm" class="sr-only">Confirm Password</label>
+                {{ register_user_form.password_confirm(type="password", id="password", class="form-control", placeholder="Confirm Password", autofocus=true, required=true)}}
+                {%endif%}
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+            </form>
+            <div class="row">
+                <div class="col-xs-4 col-md-4">
+                    <a href={{url_for('security.login')}} >Login</a>
+                </div>
+                <div class="col-xs-4 col-md-4">
+                    {% if confirmable() %}
+                    <a href={{url_for('security.send_confirmation')}}>Confirm</a>
+                    {%endif%}
+                </div>
+                <div class="col-xs-4 col-md-4">
+                    {% if recoverable() %}
+                    <a href={{url_for('security.forgot_password')}} class="pull-right">Forgot Password</a>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

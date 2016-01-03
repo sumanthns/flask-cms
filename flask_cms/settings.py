@@ -32,13 +32,18 @@ class BaseConfig(object):
     EXTENSIONS = [
         'db',
         'csrf',
+        'mail',
     ]
 
     CONTEXT_PROCESSORS = [
         'flask_cms.page.context_processors.create_breadcrumbs_snippet',
         'flask_cms.page.context_processors.add_grouper',
         'flask_cms.page.context_processors.add_navbar',
+        'flask_cms.page.context_processors.add_flash_form_errors',
         'flask_cms.search.context_processors.add_search_form',
+        'flask_cms.core.context_processors.add_registerable',
+        'flask_cms.core.context_processors.add_recoverable',
+        'flask_cms.core.context_processors.add_confirmable',
     ]
 
     # supported widgets that admin can create
@@ -78,12 +83,32 @@ class BaseConfig(object):
     SECURITY_PASSWORD_HASH = "bcrypt"
     SECURITY_PASSWORD_SALT = "secret_password_salt"
     SECURITY_RECOVERABLE = True
+    SECURITY_REGISTERABLE = True
+    SECURITY_RECOVERABLE = True
+    SECURITY_CONFIRMABLE = True
+
+    # mail settings
+    MAIL_SERVER = 'smtp.googlemail.com'
+    MAIL_PORT = 465
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = True
+
+    # gmail authentication
+    MAIL_USERNAME = os.environ.get('APP_MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('APP_MAIL_PASSWORD')
+
+    # mail accounts
+    MAIL_DEFAULT_SENDER = 'from@example.com'
 
 
 class TestConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'test.db')
     WTF_CSRF_ENABLED = False
     TESTING = True
+    SECURITY_RECOVERABLE = False
+    SECURITY_REGISTERABLE = False
+    SECURITY_RECOVERABLE = False
+    SECURITY_CONFIRMABLE = False
 
 
 class DevelopmentConfig(BaseConfig):

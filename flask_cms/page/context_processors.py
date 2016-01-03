@@ -79,3 +79,16 @@ def add_navbar():
         return snippet
 
     return dict(navbar=navbar)
+
+
+def add_flash_form_errors():
+    def flash_form_errors(form):
+        snippet = ""
+        for field, errors in form.errors.items():
+            for error in errors:
+                snippet += '<div class="alert alert-danger" role="alert">'
+                snippet += '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>'
+                snippet += '{}</div>'.format(error)
+        return snippet
+
+    return dict(flash_form_errors=flash_form_errors)
