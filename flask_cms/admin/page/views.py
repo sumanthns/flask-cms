@@ -5,7 +5,7 @@ from flask_cms.admin.page.forms import EditPage, AddWidgetToPageForm
 from flask_cms.admin.views import AdminView
 from flask_cms.ext import db
 from flask_cms.page.models import Page
-from flask_cms.utils import get_object_or_404
+from flask_cms.utils import get_object_or_404, flash_errors
 from flask_cms.widget.models.widget import Widget
 
 
@@ -30,7 +30,6 @@ class EditPageView(AdminView):
             page.content = request.form.get('content')
             page.login_required = 'login_required' in request.form
             page.show_in_nav = 'show_in_nav' in request.form
-            page.publish = 'publish' in request.form
             page.template_id = request.form.get('templates')
             page.header_image = request.form.get('header_image')
 
@@ -39,6 +38,24 @@ class EditPageView(AdminView):
         return render_template('page/admin_page.html',
                                form=form,
                                add_widget_form=add_widget_form)
+
+
+class PublishPageView(AdminView):
+    def post(self, slug):
+        page = get_object_or_404(Page, Page.slug == slug)
+        page.publish = True
+        db.session.commit()
+        flash("{} is successfully published".format(page.slug))
+        return redirect(url_for('admin.edit_page', slug=page.slug))
+
+
+class UnPublishPageView(AdminView):
+    def post(self, slug):
+        page = get_object_or_404(Page, Page.slug == slug)
+        page.publish = False
+        db.session.commit()
+        flash("{} is successfully unpublished".format(page.slug))
+        return redirect(url_for('admin.edit_page', slug=page.slug))
 
 
 class AddPageView(AdminView):
@@ -65,7 +82,6 @@ class AddPageView(AdminView):
                 content=form.content.data,
                 login_required=form.login_required.data,
                 show_in_nav=form.show_in_nav.data,
-                publish=form.publish.data,
                 template_id=form.templates.data,
             )
 

@@ -18,7 +18,6 @@ class EditPage(Form):
     content = CKTextAreaField('Content')
     login_required = BooleanField("login_required", default=False)
     show_in_nav = BooleanField("show_in_nav", default=False)
-    publish = BooleanField("publish", default=False)
     parent_slug = HiddenField("parent_slug")
 
     def __init__(self, page=None):
@@ -33,7 +32,6 @@ class EditPage(Form):
             self.content.data = page.content
             self.login_required.data = page.login_required
             self.show_in_nav.data = page.show_in_nav
-            self.publish.data = page.publish
             self.templates.data = page.template_id
             self.header_image.data = page.header_image
 

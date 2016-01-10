@@ -159,13 +159,11 @@ class AddPageViewTest(AdminPageTest):
                           'title': 'bar',
                           'description': 'desc',
                           'login_required': True,
-                          'publish': True,
                           'templates': self.template.id,
                       })
         page = self._get_page(slug='fu')
         assert page
         assert page.login_required
-        assert page.publish
         assert page.created_at is not None
         self.assertEquals(0, page.level)
         self.assertEquals('bar', page.title)
@@ -318,3 +316,25 @@ class ShowPagePreviewViwewTest(AdminPageTest):
     def test_show_preview_as_anonymous(self):
         response = self.app.get('/admin/page/preview/{}'.format(self.page.slug))
         self.assertEquals(302, response.status_code)
+
+
+class PublishPageViewTest(AdminPageTest):
+    def test_publish_as_admin(self):
+        self.login_user(self.admin_user)
+        self.app.post("/admin/page/publish/{}".format(self.page.slug))
+        page = self._get_model(Page, slug=self.page.slug)
+        assert page.publish
+
+
+class UnPublishPageViewTest(AdminPageTest):
+    def test_unpublish_as_admin(self):
+        self.login_user(self.admin_user)
+        page = self._create_page(
+            slug='fu', title='parent',
+            description='description',
+            level=0,
+            publish=True, )
+        assert page.publish
+        self.app.post("/admin/page/unpublish/{}".format(page.slug))
+        page = self._get_model(Page, slug=page.slug)
+        assert not page.publish

@@ -2,7 +2,8 @@ from flask_cms.admin import admin
 from flask_cms.admin.member.views import CreateMemberView, EditMemberView, DeleteMemberView, MemberListView, \
     CreateRoleView, DeleteRoleView
 from flask_cms.admin.page.views import EditPageView, \
-    AddPageView, DeletePageView, AddWidgetToPageView, RemoveWidgetFromPageView, ShowPagePreviewView
+    AddPageView, DeletePageView, AddWidgetToPageView, RemoveWidgetFromPageView, ShowPagePreviewView, PublishPageView, \
+    UnPublishPageView
 from flask_cms.admin.template.views import EditTemplateView, \
     AddTemplateView, DeleteTemplateView
 from flask_cms.admin.views import IndexView
@@ -16,6 +17,8 @@ routes = [((admin,),
            ('/page/<slug>/delete', DeletePageView.as_view('delete_page')),
            ('/page', AddPageView.as_view('add_page')),
            ('/page/preview/<slug>', ShowPagePreviewView.as_view('preview')),
+           ('/page/publish/<slug>', PublishPageView.as_view('publish_page')),
+           ('/page/unpublish/<slug>', UnPublishPageView.as_view('unpublish_page')),
            ('/template/<_id>', EditTemplateView.as_view('edit_template')),
            ('/template', AddTemplateView.as_view('add_template')),
            ('/template/<_id>/delete', DeleteTemplateView.as_view(
