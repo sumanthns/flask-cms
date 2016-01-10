@@ -120,3 +120,7 @@ class WidgetFormFactory(object):
                 return form()
 
         raise WidgetNotSupportedException()
+
+
+class WidgetTypeForm(Form):
+    name = StringField('Name', validators=[DataRequired()])

@@ -10,25 +10,51 @@
 {% endblock %}
 {% block content %}
 
-<div class="col-xs-12 col-md-8 col-md-offset-2">
-    <h2>Manage Widgets
-        <a href="{{url_for('admin.create_widget')}}" class="btn btn-info btn-sm" role="button">
-            <span class="glyphicon glyphicon-plus"></span>
-        </a>
-    </h2>
-    <ul class="list-group">
-        {% for widget in widgets %}
-        <li class="list-group-item">
-            <a href="{{url_for('admin.show_widget', widget_id=widget.id)}}">
-                {{widget.name}}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8 col-md-offset-2">
+            <h2>Manage Widget Types
+                <a href="{{url_for('admin.create_widget_type')}}" class="btn btn-info btn-sm" role="button">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </h2>
+            <ul class="list-group">
+                {% for widget_type in widget_types %}
+                <li class="list-group-item">
+                    {{widget_type.name}}
+                <span class="pull-right">
+                <a href="{{url_for('admin.delete_widget_type', widget_type_id=widget_type.id)}}" onclick="return confirm('Are you sure. Tis would delete all widgets of this type?')" class="btn btn-danger btn-sm" role="button">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+                </span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-8 col-md-offset-2">
+            <h2>Manage Widgets
+                <a href="{{url_for('admin.create_widget')}}" class="btn btn-info btn-sm" role="button">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </h2>
+            <ul class="list-group">
+                {% for widget in widgets %}
+                <li class="list-group-item">
+                    <a href="{{url_for('admin.show_widget', widget_id=widget.id)}}">
+                        {{widget.name}}
+                    </a>
                 <span class="pull-right">
                 <a href="{{url_for('admin.delete_widget', widget_id=widget.id)}}" onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm" role="button">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
                 </span>
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </div>
 {% endblock %}

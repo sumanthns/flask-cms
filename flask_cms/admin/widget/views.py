@@ -2,9 +2,9 @@ from flask import render_template, url_for, flash, request
 from werkzeug.utils import redirect
 
 from flask_cms.admin.views import AdminView
-from flask_cms.admin.widget.forms import WidgetFormFactory
+from flask_cms.admin.widget.forms import WidgetFormFactory, WidgetTypeForm
 from flask_cms.ext import db
-from flask_cms.utils import get_object_or_404
+from flask_cms.utils import get_object_or_404, flash_errors
 from flask_cms.widget.models.widget import Widget
 from flask_cms.widget.models.widget_type import WidgetType
 
@@ -71,4 +71,33 @@ class ShowWidgetView(AdminView):
 class WidgetIndexView(AdminView):
     def get(self):
         widgets = Widget.query.all()
-        return render_template("widget/list_widget.html", widgets=widgets)
+        widget_types = WidgetType.query.all()
+        return render_template("widget/list_widget.html",
+                               widgets=widgets, widget_types=widget_types)
+
+
+class CreateWidgetTypeView(AdminView):
+    def get(self):
+        form = WidgetTypeForm()
+        return render_template("widget_type/create_widget_type.html", form=form)
+
+    def post(self):
+        form = WidgetTypeForm()
+        if form.validate_on_submit():
+            widget_type = WidgetType(name=form.name.data)
+            db.session.add(widget_type)
+            db.session.commit()
+            flash("Widget type - {} successfully created".format(widget_type.name))
+            return redirect(url_for('admin.list_widget'))
+
+        flash_errors(form)
+        return render_template("widget_type/create_widget_type.html", form=form)
+
+
+class DeleteWidgetTypeView(AdminView):
+    def get(self, widget_type_id):
+        widget_type = get_object_or_404(WidgetType, WidgetType.id == widget_type_id)
+        db.session.delete(widget_type)
+        db.session.commit()
+        flash("Successfully deleted widget_type - {}".format(widget_type.name))
+        return redirect(url_for('admin.list_widget'))

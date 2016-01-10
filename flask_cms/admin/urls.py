@@ -9,7 +9,7 @@ from flask_cms.admin.template.views import EditTemplateView, \
 from flask_cms.admin.views import IndexView
 from flask_cms.admin.widget.views import \
     CreateWidgetView, ShowWidgetView, DeleteWidgetView,\
-    WidgetIndexView
+    WidgetIndexView, CreateWidgetTypeView, DeleteWidgetTypeView
 
 routes = [((admin,),
            ('', IndexView.as_view('index')),
@@ -28,6 +28,8 @@ routes = [((admin,),
            ('/widget/<widget_id>/delete',
             DeleteWidgetView.as_view('delete_widget')),
            ('/widget/list', WidgetIndexView.as_view('list_widget')),
+           ('/widget_type', CreateWidgetTypeView.as_view('create_widget_type')),
+           ('/widget_type/delete/<widget_type_id>', DeleteWidgetTypeView.as_view('delete_widget_type')),
            ('/page/<slug>/widget', AddWidgetToPageView.as_view('add_widget_to_page')),
            ('/page/<slug>/widget/<widget_id>/remove',
             RemoveWidgetFromPageView.as_view('remove_widget_from_page')),

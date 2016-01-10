@@ -173,3 +173,65 @@ class WidgetIndexViewTest(AdminWidgetTest):
     def test_list_widget_anonymous(self):
         response = self.app.get('/admin/widget/list')
         self.assertEquals(302, response.status_code)
+
+
+class CreateWidgetTypeTest(AdminWidgetTest):
+    def test_create_widget_type_as_admin(self):
+        self.login_user(self.admin_user)
+        self.app.post("/admin/widget_type",
+                      data={'name': 'fubar'})
+        widget_type = self._get_model(WidgetType,
+                                      name='fubar')
+        assert widget_type
+
+    def test_create_widget_type_as_non_admin(self):
+        self.login_user(self.user1)
+        self.app.post("/admin/widget_type",
+                      data={'name': 'fubar'})
+        widget_type = self._get_model(WidgetType,
+                                      name='fubar')
+        assert widget_type is None
+
+    def test_create_widget_type_as_anonymous(self):
+        self.app.post("/admin/widget_type",
+                      data={'name': 'fubar'})
+        widget_type = self._get_model(WidgetType,
+                                      name='fubar')
+        assert widget_type is None
+
+
+class DeleteWidgetTypeTest(AdminWidgetTest):
+    def test_delete_widget_type_as_admin(self):
+        self.login_user(self.admin_user)
+        self._create_model(WidgetType, name='fubar')
+        widget_type = self._get_model(WidgetType,
+                                      name='fubar')
+        assert widget_type
+
+        self.app.get("/admin/widget_type/delete/{}".format(widget_type.id))
+        widget_type = self._get_model(WidgetType,
+                                      id=widget_type.id)
+        assert widget_type is None
+
+    def test_delete_widget_type_as_non_admin(self):
+        self.login_user(self.user1)
+        self._create_model(WidgetType, name='fubar')
+        widget_type = self._get_model(WidgetType,
+                                      name='fubar')
+        assert widget_type
+
+        self.app.get("/admin/widget_type/delete/{}".format(widget_type.id))
+        widget_type = self._get_model(WidgetType,
+                                      id=widget_type.id)
+        assert widget_type
+
+    def test_delete_widget_type_as_anonymous(self):
+        self._create_model(WidgetType, name='fubar')
+        widget_type = self._get_model(WidgetType,
+                                      name='fubar')
+        assert widget_type
+
+        self.app.get("/admin/widget_type/delete/{}".format(widget_type.id))
+        widget_type = self._get_model(WidgetType,
+                                      id=widget_type.id)
+        assert widget_type

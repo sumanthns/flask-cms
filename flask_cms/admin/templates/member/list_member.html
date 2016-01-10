@@ -12,9 +12,11 @@
                 {% for role in roles %}
                 <li class="list-group-item">
                     <h3> {{role.name}}
-                        <a href="{{url_for('admin.delete_role', role_id=role.id)}}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')" role="button">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </a>
+                        <span class="pull-right">
+                            <a href="{{url_for('admin.delete_role', role_id=role.id)}}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')" role="button">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                        </span>
                     </h3>
                 </li>
                 {% endfor %}
@@ -30,9 +32,11 @@
                 {% for member in members %}
                 <li class="list-group-item">
                     <a href="{{url_for('admin.edit_member', member_id=member.id)}}"> {{member.first_name}} {{member.last_name}}</a>
-                    <a href="{{url_for('admin.delete_member', member_id=member.id)}}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')" role="button">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a>
+                    <span class="pull-right">
+                        <a href="{{url_for('admin.delete_member', member_id=member.id)}}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')" role="button">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                    </span>
                 </li>
                 {% endfor %}
             </ul>
