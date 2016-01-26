@@ -3,3 +3,5 @@ venv
 **/test.db
 **/*.pyc
 flask_project.egg-info
+build
+dist
